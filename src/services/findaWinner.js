@@ -5,6 +5,7 @@ export default function findAWinner(actual_game){
         [0, 3, 6],
         [1, 4, 7],
         [2, 5, 8],
+        [2, 4, 6],
         [3, 4, 5],
         [4, 1, 6],
         [6, 7, 8]
