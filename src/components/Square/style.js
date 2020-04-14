@@ -1,6 +1,7 @@
 import style from 'styled-components';
 export const Box = style.div`
-    background: #fff;
+    background: ${props => props.isHighlighted? "#ccc" : "#fff"};
+    #fff;
     padding: 20px;
     width: 100px;
     height: 100px;
@@ -10,4 +11,5 @@ export const Box = style.div`
     &:hover{
         cursor: pointer;
     }
+
 `

@@ -5,7 +5,7 @@ export default (props) =>{
 
     const renderSquare = (i) => {
         return (<Square value={props.accessBoard(i)}
-            onClick={() => props.onClick(i)} />);
+            onClick={() => props.onClick(i)} isHighlighted={() => props.isHighlighted(i)} />);
     };
     
     return (

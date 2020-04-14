@@ -1,12 +1,13 @@
 import React,{useState, useEffect} from 'react';
 import Board from '../Board';
+import { Container, Title, Main} from "./style";
 import findaWinner from "../../services/findaWinner";
 export default function Game(){
     const [history, setHistory] = useState([{"board": Array(9).fill(null)}]);
     const [isPlayer1, setIsPlayer1] = useState(true);
     const [status, setStatus] = useState("");
     const [stepNumber, setStepNumber] = useState(0);
-    
+    const [box_highlighted, setBox_Highlighted] = useState([]);
     const [current, setCurrent] = useState(history[history.length - 1]);
 
     const moves = history.map((step, move) => {
@@ -26,11 +27,12 @@ export default function Game(){
         setIsPlayer1(step % 2 === 0);
       }
     useEffect(()=>{
-        console.log(history);
+        const winner = findaWinner(current.board);
+        setBox_Highlighted([]);
         setCurrent(history[stepNumber]);
-        const winner = findaWinner(current.board.slice());
         if(winner){
-            setStatus(`Vencedor: ${winner}`);
+            setBox_Highlighted(winner[1]);
+            setStatus(`Vencedor: ${winner[0]}`);
         }
         else if(stepNumber === 9){
             setStatus(`Empate`);
@@ -54,14 +56,19 @@ export default function Game(){
     }
 
     return(
-        <div className="game">
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
-        </div>
-        <div className="game-board">
-          <Board onClick={(i) => handleClick(i)}  accessBoard={(i) => current.board[i]}/>
-        </div>
-      </div>
+        <Main>
+        <Container>
+            <div className="game-info">
+                <Title>{status}</Title>
+            </div>
+            <div className="game-board">
+                <Board onClick={(i) => handleClick(i)}  
+                        accessBoard={(i) => current.board[i]}
+                        isHighlighted={(i) => box_highlighted.includes(i)}
+                        />
+            </div>
+        </Container>
+        <ul>{moves}</ul>       
+      </Main>
     );
 }
